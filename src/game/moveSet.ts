@@ -1,20 +1,16 @@
-import { BoardHash, Position } from "./board"
-import { isBlockedBy, isOnBoard, PossibleMove, determinPossibleMove } from "./chessPieces"
-
-export interface MoveTemplate {
-    [chessPiece: string]: (pos: Position, board: BoardHash) => Position[]
-}
+import { isBlockedBy, isOnBoard, determinPossibleMove } from "../tools/tools"
+import { BoardHash, PossibleMove, MoveTemplate } from "../types/interfaces"
+import { Position } from "../types/type"
 
 export let checkMoveDirection = (pos: Position, board: BoardHash, start: number, limit: number, xFactor: number, yFactor: number) => {
     let back: Position[] = []
     for (let i = start; i <= limit; i++) {
         let temp: PossibleMove = determinPossibleMove(pos, { x: i * xFactor, y: i * yFactor }, board)
         if (temp.pos !== null) back.push(temp.pos)
-        if (temp.break) break
+        if (temp.lastPossiblePos) break
     }
     return back
 }
-
 
 export const MoveSet: MoveTemplate = {
     "Bauer": (pos, board) => {

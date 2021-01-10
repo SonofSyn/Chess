@@ -1,7 +1,9 @@
 import test from 'ava'
-import { buildBoard, Position } from '../board'
-import { determinPossibleMoves, isBlockedBy, isOnBoard } from '../chessPieces'
-import { Game, executeMove } from '../gameEngine'
+import { initBoard } from '../game/board'
+import { determinPossibleMoves, isBlockedBy, isOnBoard } from '../tools/tools'
+import { executeMove } from '../game/game'
+import { Game } from '../types/interfaces'
+import { Position } from '../types/type'
 
 test("Position on board", t => {
     let flag = true
@@ -20,23 +22,23 @@ test("Position not on board", t => {
 })
 
 test("Position is blocked by black", t => {
-    let board = buildBoard()
-    t.is(isBlockedBy({ x: 1, y: 7 }, board.board), "schwarz")
+    let board = initBoard()
+    t.is(isBlockedBy({ x: 1, y: 7 }, board), "schwarz")
 })
 
 test("This position contains no chess piece", t => {
-    let board = buildBoard()
+    let board = initBoard()
     let err = t.throws(() => {
-        determinPossibleMoves({ x: 4, y: 4 }, board.board)
+        determinPossibleMoves({ x: 4, y: 4 }, board)
     }, undefined)
     t.is(err.message, 'Die Position enthält keine Figur')
 })
 
 
 test("Test knight movement", t => {
-    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: buildBoard() }
+    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: initBoard() ,history:{movementLog:[],beatenLog:{white:[],black:[]}}}
     game = executeMove(game, { x: 7, y: 1 }, { x: 6, y: 3 });
-    let info = determinPossibleMoves({ x: 6, y: 3 }, game.gameBoard.board)
+    let info = determinPossibleMoves({ x: 6, y: 3 }, game.gameBoard)
     let checkPos: Position[] = [
         { x: 4, y: 4 },
         { x: 5, y: 5 },

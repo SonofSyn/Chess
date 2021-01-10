@@ -1,15 +1,16 @@
 import test from 'ava'
-import { buildBoard } from '../board';
-import { Game, executeMove } from '../gameEngine';
+import { initBoard } from '../game/board';
+import { executeMove } from '../game/game';
+import { Game } from '../types/interfaces';
 
 test("Move executed", t => {
-    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: buildBoard() }
+    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: initBoard() ,history:{movementLog:[],beatenLog:{white:[],black:[]}}}
     game = executeMove(game, { x: 2, y: 2 }, { x: 2, y: 3 });
     t.pass()
 })
 
 test("New Position not on board", t => {
-    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: buildBoard() }
+    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: initBoard() ,history:{movementLog:[],beatenLog:{white:[],black:[]}}}
     let err = t.throws(() => {
         game = executeMove(game, { x: 2, y: 2 }, { x: 9, y: 11 });
     }, undefined)
@@ -17,7 +18,7 @@ test("New Position not on board", t => {
 })
 
 test("No gamepiece on selected position", t => {
-    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: buildBoard() }
+    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: initBoard() ,history:{movementLog:[],beatenLog:{white:[],black:[]}}}
     let err = t.throws(() => {
         game = executeMove(game, { x: 3, y: 3 }, { x: 3, y: 4 });
     }, undefined)
@@ -25,7 +26,7 @@ test("No gamepiece on selected position", t => {
 })
 
 test("Wrong turn Black", t => {
-    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: buildBoard() }
+    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: initBoard() ,history:{movementLog:[],beatenLog:{white:[],black:[]}}}
     let err = t.throws(() => {
         game = executeMove(game, { x: 2, y: 7 }, { x: 2, y: 6 });
     }, undefined)
@@ -33,7 +34,7 @@ test("Wrong turn Black", t => {
 })
 
 test("Wrong turn White", t => {
-    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: buildBoard() }
+    let game: Game = { gameId: "1", turn: 0, winner: "", gameBoard: initBoard() ,history:{movementLog:[],beatenLog:{white:[],black:[]}}}
     game = executeMove(game, { x: 2, y: 2 }, { x: 2, y: 3 });
     let err = t.throws(() => {
         game = executeMove(game, { x: 3, y: 2 }, { x: 3, y: 3 });

@@ -1,24 +1,24 @@
 import test from 'ava'
-import { buildBoard } from '../board'
+import { initBoard } from '../game/board'
 
 test("create Board", t => {
-    let board = buildBoard()
-    t.is(Object.keys(board.board).length, 64)
+    let board = initBoard()
+    t.is(Object.keys(board).length, 64)
 })
 
 test("check for king", t => {
-    let board = buildBoard()
-    t.is(board.board["51"].content, "König")
+    let board = initBoard()
+    t.is(board["51"].content, "König")
 })
 
 test("check if empty", t => {
-    let board = buildBoard()
-    t.is(board.board["44"].content, null)
+    let board = initBoard()
+    t.is(board["44"].content, null)
 })
 
 test("check for black", t => {
-    let board = buildBoard()
-    t.is(board.board["17"].player, "schwarz")
+    let board = initBoard()
+    t.is(board["17"].player, "schwarz")
 })
 
 

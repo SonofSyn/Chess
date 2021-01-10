@@ -1,20 +1,8 @@
-import { BoardHash, Player, Position } from "./board";
-import { MoveSet } from "./moveSet";
+import { BoardHash, PossibleMove } from "../types/interfaces";
+import { MoveSet } from "../game/moveSet";
+import { Position, Player } from "../types/type";
 
-export type ChessPiece = "Bauer" | "Turm" | "Springer" | "Läufer" | "Königin" | "König"
-export interface PossibleMove { pos: Position | null, break: boolean }
-export interface GamePiece {
-    type: ChessPiece,
-    color: "white" | "black"
-    pos: Position,
-    possibleMoves: Position[]
-}
-export interface Move { x: number, y: number }
 
-export const startSet: ChessPiece[][] = [
-    ["Turm", "Springer", "Läufer", "Königin", "König", "Läufer", "Springer", "Turm"],
-    ["Bauer", "Bauer", "Bauer", "Bauer", "Bauer", "Bauer", "Bauer", "Bauer"]
-]
 
 /**
  * Checks if coordinates are on the gameboard
@@ -40,19 +28,19 @@ export let isBlockedBy = (pos: Position, board: BoardHash): Player => board[pos.
  * Returns a possible move
  *
  * @param {Position} pos
- * @param {Move} move
+ * @param {MovePosition} move
  * @param {BoardHash} board
  * @return {*}  {PossibleMove}
  */
-export let determinPossibleMove = (pos: Position, move: Move, board: BoardHash): PossibleMove => {
+export let determinPossibleMove = (pos: Position, move: Position, board: BoardHash): PossibleMove => {
     let back: Position = { x: pos.x + move.x, y: pos.y + move.y }
     if (isOnBoard(back)) {
         let blockedBy = isBlockedBy(back, board)
-        if (blockedBy === "") return { pos: back, break: false }
-        if (blockedBy !== board[pos.x + "" + pos.y].player) return { pos: back, break: true }
-        else return { pos: null, break: true }
+        if (blockedBy === "") return { pos: back, lastPossiblePos: false }
+        if (blockedBy !== board[pos.x + "" + pos.y].player) return { pos: back, lastPossiblePos: true }
+        else return { pos: null, lastPossiblePos: true }
     }
-    else return { pos: null, break: true }
+    else return { pos: null, lastPossiblePos: true }
 }
 /**
  * Determines all possible moves a gamepiece can make at a certain position
@@ -72,7 +60,7 @@ export let determinPossibleMoves = (pos: Position, board: BoardHash): { pieceTyp
 export let checkMove = (posMove: Position[], move: Position): boolean => {
     let back = false
     posMove.forEach(pos => {
-        if(pos.x===move.x && pos.y===move.y)back=true
+        if (pos.x === move.x && pos.y === move.y) back = true
     })
     return back
 }
