@@ -3,13 +3,13 @@ import { Position, ChessPiece, Player } from "./type";
 export interface Game {
     gameId: string,
     turn: number,
-    winner: Player,
+    winner: Player | "Tie",
     gameBoard: BoardHash,
     history: History
 }
 
 export interface History { movementLog: Movement[], beatenLog: BeatenPieces }
-export interface Movement { orgPos: Position, newPos: Position }
+export interface Movement { orgPos: Position, newPos: Position, chessPiece: ChessPiece, player: Player }
 export interface BeatenPieces { white: ChessPiece[], black: ChessPiece[] }
 
 export interface BoardHash { [pos: string]: Chessfield }

@@ -76,9 +76,9 @@ export const MoveSet: MoveTemplate = {
             //upLeft
             checkMoveDirection(pos, board, 1, 8 - pos.y, -1, 1),
             //downLeft
-            checkMoveDirection(pos, board, 1, pos.x - 1, -1, -1),
+            checkMoveDirection(pos, board, 1, pos.y - 1, -1, -1),
             //downRight
-            checkMoveDirection(pos, board, 1, pos.x - 1, 1, -1)
+            checkMoveDirection(pos, board, 1, pos.y - 1, 1, -1)
         )
         return back
     },
@@ -98,9 +98,9 @@ export const MoveSet: MoveTemplate = {
             //upLeft
             checkMoveDirection(pos, board, 1, 8 - pos.y, -1, 1),
             //downLeft
-            checkMoveDirection(pos, board, 1, pos.x - 1, -1, -1),
+            checkMoveDirection(pos, board, 1, pos.y - 1, -1, -1),
             //downRight
-            checkMoveDirection(pos, board, 1, pos.x - 1, 1, -1)
+            checkMoveDirection(pos, board, 1, pos.y - 1, 1, -1)
         )
         return back
     },

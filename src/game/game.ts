@@ -4,6 +4,7 @@ import * as io from 'readline-sync';
 import { Position } from "../types/type";
 import { Game } from "../types/interfaces";
 import { displayBoard, displayPossibleMoves } from "../tools/display";
+import { checkForWinner, tradePawn } from "./rules";
 
 
 
@@ -25,22 +26,26 @@ export let startGame = () => {
  * @return {*}  {Chessboard}
  */
 export let executeMove = (game: Game, originalPos: Position, newPos: Position): Game => {
+    let orgPosData = game.gameBoard[originalPos.x + "" + originalPos.y]
+    let newPosData = game.gameBoard[newPos.x + "" + newPos.y]
     if (!isOnBoard(newPos)) throw new Error("Die neue Position befindet sich nicht auf dem Board")
-    if (game.gameBoard[originalPos.x + "" + originalPos.y].content === null) throw new Error("Es befindet sich keine Spielfigur auf der Position")
-    if (game.turn % 2 === 0 && game.gameBoard[originalPos.x + "" + originalPos.y].player !== "weiß") throw new Error("Spieler Weiß ist am Zug")
-    else if (game.turn % 2 === 1 && game.gameBoard[originalPos.x + "" + originalPos.y].player !== "schwarz") throw new Error("Spieler Schwarz ist am Zug")
-
-    if (game.gameBoard[newPos.x + "" + newPos.y].content !== null) {
-        if (game.gameBoard[newPos.x + "" + newPos.y].player === "weiß") game.history.beatenLog.white.push(game.gameBoard[newPos.x + "" + newPos.y].content!)
-        else game.history.beatenLog.black.push(game.gameBoard[newPos.x + "" + newPos.y].content!)
-        if (game.gameBoard[newPos.x + "" + newPos.y].content === "König") game.winner = game.gameBoard[originalPos.x + "" + originalPos.y].player
+    if (orgPosData.content === null) throw new Error("Es befindet sich keine Spielfigur auf der Position")
+    if (game.turn % 2 === 0 && orgPosData.player !== "weiß") throw new Error("Spieler Weiß ist am Zug")
+    else if (game.turn % 2 === 1 && orgPosData.player !== "schwarz") throw new Error("Spieler Schwarz ist am Zug")
+    if (newPosData.content !== null) {
+        if (newPosData.player === "weiß") game.history.beatenLog.white.push(newPosData.content!)
+        else game.history.beatenLog.black.push(newPosData.content!)
+        game = checkForWinner(game, originalPos, newPos)
     }
 
-    game.gameBoard[newPos.x + "" + newPos.y].content = game.gameBoard[originalPos.x + "" + originalPos.y].content
-    game.gameBoard[newPos.x + "" + newPos.y].player = game.gameBoard[originalPos.x + "" + originalPos.y].player
-    game.gameBoard[originalPos.x + "" + originalPos.y].content = null
-    game.gameBoard[originalPos.x + "" + originalPos.y].player = ""
+    let trade = tradePawn(game, originalPos, newPos)
+    if (trade !== null) newPosData.content = trade
+    else newPosData.content = orgPosData.content
+    newPosData.player = orgPosData.player
+    orgPosData.content = null
+    orgPosData.player = ""
     game.turn = game.turn + 1
+    game.history.movementLog.push({ orgPos: originalPos, newPos: newPos, chessPiece: orgPosData.content!, player: orgPosData.player! })
     return game
 }
 
