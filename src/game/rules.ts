@@ -2,7 +2,7 @@ import { Chessfield, Game } from "../types/interfaces"
 import { ChessPiece, Player, Position } from "../types/type"
 import * as io from 'readline-sync';
 
-export let tradePawn = (game: Game, originalPos: Position, newPos: Position):ChessPiece|null => {
+export let tradePawn = (game: Game, originalPos: Position, newPos: Position): ChessPiece | null => {
     if (game.gameBoard[originalPos.x + "" + originalPos.y].content === "Bauer") {
         let log: ChessPiece[] = []
         if (newPos.y === 1) { log = game.history.beatenLog.black }
@@ -15,9 +15,9 @@ export let tradePawn = (game: Game, originalPos: Position, newPos: Position):Che
                 (console.log("Error"))
                 tradePawn(game, originalPos, newPos)
             }
-            else{
+            else {
                 return log[numb]
-            } 
+            }
         }
     }
     return null
@@ -33,8 +33,36 @@ export let checkForTie = (game: Game, originalPos: Position, newPos: Position): 
     return game
 }
 
-export let rochade = () => {
-
+export let rochade = (game: Game, originalPos: Position) => {
+    let back: Position[] = []
+    let kingPos: Position[] = [{ x: 5, y: 1 }, { x: 5, y: 8 }]
+    let towerPos: Position[] = [{ x: 1, y: 1 }, { x: 8, y: 1 }, { x: 1, y: 8 }, { x: 8, y: 8 }]
+    if (game.gameBoard[originalPos.x + "" + originalPos.y].content === "König") {
+        kingPos.forEach(pos => {
+            if (pos.x === originalPos.x && pos.y === originalPos.y) {
+                let found = false
+                game.history.movementLog.forEach(movement => {
+                    if (movement.orgPos.x == originalPos.x && movement.orgPos.x === originalPos.y) { found = true }
+                })
+                if (!found) {
+                    towerPos.forEach(tower => {
+                        if (tower.y === originalPos.y) {
+                            let iter = tower.x < originalPos.x ? tower.x : originalPos.x
+                            let bounds = tower.x < originalPos.x ? originalPos.x : tower.x
+                            let notEmptyFlag = false
+                            for (let i = iter + 1; i < bounds; i++) {
+                                if (game.gameBoard[iter + "" + originalPos.y].content !== null) notEmptyFlag = true
+                            }
+                            if (!notEmptyFlag) {
+                                back.push({ x: tower.x < originalPos.x ? tower.x + 1 : tower.x - 1, y: tower.y })
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
+    return back
 }
 
 export let checkKing = () => {
