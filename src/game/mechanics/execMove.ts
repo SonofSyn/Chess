@@ -42,7 +42,7 @@ export let executeMove = (game: Game, originalPos: Position, newPos: Position, s
     game.history.movementLog.push({ orgPos: originalPos, newPos: newPos, chessPiece: orgPosData.content!, player: orgPosData.player! })
 
     let check = kingInCheck(game, newPosData.player === "schwarz" ? "weiß" : "schwarz")
-    if (check !== null) throw new Error("Es befindet sich keine Spielfigur auf der Position")
+    if (check !== null) throw new Error("Zug nicht moeglich ansonsten Schach")
     kingInCheck(game, newPosData.player)
     return game
 }
