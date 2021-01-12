@@ -1,6 +1,6 @@
 import { determinPossibleMoves } from "./tools"
 import { axis } from "../types/const"
-import { BoardHash } from "../types/interfaces"
+import { BoardHash, Movement } from "../types/interfaces"
 import { Position } from "../types/type"
 
 /**
@@ -31,8 +31,8 @@ export let displayBoard = (chessBoard: BoardHash): string[][] => {
     return display
 }
 
-export let displayPossibleMoves = (chessBoard: BoardHash, pos: Position): { display: string[][], moves: Position[] } => {
-    let moves: Position[] = determinPossibleMoves(pos, chessBoard).pos
+export let displayPossibleMoves = (chessBoard: BoardHash, log: Movement[], pos: Position): { display: string[][], moves: Position[] } => {
+    let moves: Position[] = determinPossibleMoves(pos, log, chessBoard).pos
     let display = displayBoard(chessBoard)
     moves.forEach(move => {
         display[8 - move.y][move.x] = "XXXX"

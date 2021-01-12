@@ -1,6 +1,8 @@
-import { Chessfield, Game } from "../types/interfaces"
+import { BoardHash, Chessfield, Game, Movement } from "../types/interfaces"
 import { ChessPiece, Player, Position } from "../types/type"
 import * as io from 'readline-sync';
+import { rochadePos } from "../types/const";
+import { executeMove } from "./game";
 
 export let tradePawn = (game: Game, originalPos: Position, newPos: Position): ChessPiece | null => {
     if (game.gameBoard[originalPos.x + "" + originalPos.y].content === "Bauer") {
@@ -33,15 +35,31 @@ export let checkForTie = (game: Game, originalPos: Position, newPos: Position): 
     return game
 }
 
-export let rochade = (game: Game, originalPos: Position) => {
+export let checkForRochade = (game: Game, orgPos: Position, newPos: Position): Game => {
+    if (game.gameBoard[orgPos.x + "" + orgPos.y].content === "König" && (orgPos.y === 1 || orgPos.y === 8)) {
+        // now only King Positions
+        rochadePos.forEach(pos => {
+            if (pos.x === newPos.x && pos.y === newPos.y) {
+                let towerPos = { x: newPos.x === 3 ? 1 : 8, y: orgPos.y }
+                let newTowerPos = { x: newPos.x === 3 ? newPos.x + 1 : newPos.x - 1, y: orgPos.y }
+                console.log("Rochade")
+                game = executeMove(game, towerPos, newTowerPos, true)
+            }
+        })
+    }
+    return game
+
+}
+
+export let rochade = (board: BoardHash, log: Movement[], originalPos: Position) => {
     let back: Position[] = []
     let kingPos: Position[] = [{ x: 5, y: 1 }, { x: 5, y: 8 }]
     let towerPos: Position[] = [{ x: 1, y: 1 }, { x: 8, y: 1 }, { x: 1, y: 8 }, { x: 8, y: 8 }]
-    if (game.gameBoard[originalPos.x + "" + originalPos.y].content === "König") {
+    if (board[originalPos.x + "" + originalPos.y].content === "König") {
         kingPos.forEach(pos => {
             if (pos.x === originalPos.x && pos.y === originalPos.y) {
                 let found = false
-                game.history.movementLog.forEach(movement => {
+                log.forEach(movement => {
                     if (movement.orgPos.x == originalPos.x && movement.orgPos.x === originalPos.y) { found = true }
                 })
                 if (!found) {
@@ -51,10 +69,11 @@ export let rochade = (game: Game, originalPos: Position) => {
                             let bounds = tower.x < originalPos.x ? originalPos.x : tower.x
                             let notEmptyFlag = false
                             for (let i = iter + 1; i < bounds; i++) {
-                                if (game.gameBoard[iter + "" + originalPos.y].content !== null) notEmptyFlag = true
+                                if (board[i + "" + originalPos.y].content !== null) notEmptyFlag = true
                             }
                             if (!notEmptyFlag) {
-                                back.push({ x: tower.x < originalPos.x ? tower.x + 1 : tower.x - 1, y: tower.y })
+                                // pos incorrect
+                                back.push({ x: tower.x < originalPos.x ? tower.x + 2 : tower.x - 1, y: tower.y })
                             }
                         }
                     })

@@ -1,6 +1,7 @@
-import { BoardHash, PossibleMove } from "../types/interfaces";
+import { BoardHash, Movement, PossibleMove } from "../types/interfaces";
 import { MoveSet } from "../game/moveSet";
 import { Position, Player } from "../types/type";
+import { rochade } from "../game/rules";
 
 
 
@@ -51,9 +52,15 @@ export let determinPossibleMove = (pos: Position, move: Position, board: BoardHa
  * @param {BoardHash} board
  * @return {*}  {Position[]}
  */
-export let determinPossibleMoves = (pos: Position, board: BoardHash): { pieceType: string, pos: Position[] } => {
+export let determinPossibleMoves = (pos: Position, log: Movement[], board: BoardHash): { pieceType: string, pos: Position[] } => {
     let type = board[pos.x + "" + pos.y].content
-    if (type !== null) return { pieceType: type, pos: MoveSet[type](pos, board) }
+
+    if (type !== null) {
+        let moves = MoveSet[type](pos, board)
+        let extraMoves = rochade(board, log, pos)
+        moves = moves.concat(extraMoves)
+        return { pieceType: type, pos: moves }
+    }
     throw new Error("Die Position enthält keine Figur")
 }
 
