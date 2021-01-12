@@ -9,7 +9,7 @@ export let kingInCheck = (game: Game, color: Player): { field: Chessfield, kingP
     let back: { field: Chessfield, kingPos: Position } | null = null
     Object.keys(game.gameBoard).forEach(field => {
         fieldData = game.gameBoard[field]
-        if (fieldData.content === "König" && fieldData.player !== color) kingPos = fieldData.pos
+        if (fieldData.content === "König" && fieldData.player !== (color === "schwarz" ? "weiß" : "schwarz")) kingPos = fieldData.pos
     })
     Object.keys(game.gameBoard).forEach(field => {
         fieldData = game.gameBoard[field]

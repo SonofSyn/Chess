@@ -19,7 +19,6 @@ import { Console } from "console"
  * @return {*}  {Chessboard}
  */
 export let executeMove = (game: Game, originalPos: Position, newPos: Position, skip = false): Game => {
-    let tempGame = game
     let orgPosData = game.gameBoard[originalPos.x + "" + originalPos.y]
     let newPosData = game.gameBoard[newPos.x + "" + newPos.y]
     if (!isOnBoard(newPos)) throw new Error("Die neue Position befindet sich nicht auf dem Board")
@@ -42,10 +41,8 @@ export let executeMove = (game: Game, originalPos: Position, newPos: Position, s
     if (!skip) game.turn = game.turn + 1
     game.history.movementLog.push({ orgPos: originalPos, newPos: newPos, chessPiece: orgPosData.content!, player: orgPosData.player! })
 
-    // let check = kingInCheck(game, orgPosData.player)
-    // if (check !== null) {
-    //     throw new Error("Es befindet sich keine Spielfigur auf der Position")
-    // }
-    kingInCheck(game, orgPosData.player)
+    let check = kingInCheck(game, newPosData.player === "schwarz" ? "weiß" : "schwarz")
+    if (check !== null) throw new Error("Es befindet sich keine Spielfigur auf der Position")
+    kingInCheck(game, newPosData.player)
     return game
 }
