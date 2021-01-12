@@ -1,7 +1,7 @@
-import { determinPossibleMoves } from "./tools"
-import { axis } from "../types/const"
-import { BoardHash, Movement } from "../types/interfaces"
-import { Position } from "../types/type"
+import { axis } from "../../types/const"
+import { BoardHash, Movement } from "../../types/interfaces"
+import { Position } from "../../types/type"
+import { determinPossibleMoves } from "../moves/determinPossibleMoves"
 
 /**
  * Displays current board state as string array

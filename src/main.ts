@@ -1,7 +1,7 @@
 import { initBoard } from "./game/board";
-import { executeMove, startGame } from "./game/game";
-import { displayPossibleMoves } from "./tools/display";
-import { determinPossibleMoves } from "./tools/tools";
+import { startGame } from "./game/game";
+import { executeMove } from "./game/mechanics/execMove";
+import { displayPossibleMoves } from "./game/tools/display";
 import { Game } from "./types/interfaces";
 
 startGame()

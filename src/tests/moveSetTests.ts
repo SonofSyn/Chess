@@ -1,9 +1,10 @@
 import test from 'ava'
 import { initBoard } from '../game/board'
-import { executeMove } from '../game/game'
 import { Game } from '../types/interfaces'
-import { checkMoveDirection, MoveSet } from '../game/moveSet'
+import { MoveSet } from '../game/moves/moveSet'
 import { Position } from '../types/type'
+import { executeMove } from '../game/mechanics/execMove'
+import { checkMoveDirection } from '../game/moves/checkMoveDirection'
 
 
 test("Check Upwards direction", t => {

@@ -1,29 +1,8 @@
-import { BoardHash, Movement, PossibleMove } from "../types/interfaces";
-import { MoveSet } from "../game/moveSet";
-import { Position, Player } from "../types/type";
-import { rochade } from "../game/rules";
-
-
-
-/**
- * Checks if coordinates are on the gameboard
- *
- * @param {Position} pos
- * @return {*}  {boolean}
- */
-export let isOnBoard = (pos: Position): boolean => {
-    if (pos.y < 1 || pos.y > 8 || pos.x < 1 || pos.x > 8) return false
-    return true
-}
-
-/**
- * Checks by whom the current field is occupied
- *
- * @param {Position} pos
- * @param {BoardHash} board
- * @return {*}  {Color}
- */
-export let isBlockedBy = (pos: Position, board: BoardHash): Player => board[pos.x + "" + pos.y].player
+import { BoardHash, PossibleMove, Movement } from "../../types/interfaces"
+import { Position } from "../../types/type"
+import { MoveSet } from "./moveSet"
+import { rochade } from "../rules/rochadeRule"
+import { isOnBoard, isBlockedBy } from "../tools/tools"
 
 /**
  * Returns a possible move
@@ -54,7 +33,6 @@ export let determinPossibleMove = (pos: Position, move: Position, board: BoardHa
  */
 export let determinPossibleMoves = (pos: Position, log: Movement[], board: BoardHash): { pieceType: string, pos: Position[] } => {
     let type = board[pos.x + "" + pos.y].content
-
     if (type !== null) {
         let moves = MoveSet[type](pos, board)
         let extraMoves = rochade(board, log, pos)
@@ -62,12 +40,4 @@ export let determinPossibleMoves = (pos: Position, log: Movement[], board: Board
         return { pieceType: type, pos: moves }
     }
     throw new Error("Die Position enthält keine Figur")
-}
-
-export let checkMove = (posMove: Position[], move: Position): boolean => {
-    let back = false
-    posMove.forEach(pos => {
-        if (pos.x === move.x && pos.y === move.y) back = true
-    })
-    return back
 }

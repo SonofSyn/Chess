@@ -1,6 +1,6 @@
 import test from 'ava'
 import { initBoard } from '../game/board';
-import { executeMove } from '../game/game';
+import { executeMove } from '../game/mechanics/execMove';
 import { Game } from '../types/interfaces';
 
 test("Move executed", t => {
