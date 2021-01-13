@@ -6,6 +6,7 @@ import { checkForTrade, tradePawn } from "../rules/tradeRule"
 import { checkForWinner } from "../status"
 import { kingInCheck } from "../rules/kingInCheck"
 import { Console } from "console"
+import { displayPossibleMoves } from "../tools/display"
 
 
 
@@ -33,18 +34,11 @@ export let executeMove = async (game: Game, originalPos: Position, newPos: Posit
     if (!skip) game = checkForRochade(game, originalPos, newPos)
     // game = checkForWinner(game, originalPos, newPos)
 
-    newPosData.content = checkForTrade(game, orgPosData, newPosData)
-    newPosData.player = orgPosData.player
-    orgPosData.content = null
-    orgPosData.player = ""
-
+    await doMove(game, orgPosData, newPosData)
 
     let check = await kingInCheck(game, newPosData.player)
     if (check.length > 0) {
-        orgPosData.content = newPosData.content
-        orgPosData.player = newPosData.player
-        newPosData.content = null
-        newPosData.player = ""
+        await undoMove(orgPosData, newPosData)
         throw new Error("Zug nicht moeglich ansonsten Schach")
     }
 
@@ -55,4 +49,18 @@ export let executeMove = async (game: Game, originalPos: Position, newPos: Posit
         console.log("Schach")
     }
     return game
+}
+
+export let doMove = async(game: Game, orgPosData: Chessfield, newPosData: Chessfield) => {
+    newPosData.content = checkForTrade(game, orgPosData, newPosData)
+    newPosData.player = orgPosData.player
+    orgPosData.content = null
+    orgPosData.player = ""
+}
+
+export let undoMove = async(orgPosData: Chessfield, newPosData: Chessfield) => {
+    orgPosData.content = newPosData.content
+    orgPosData.player = newPosData.player
+    newPosData.content = null
+    newPosData.player = ""
 }
