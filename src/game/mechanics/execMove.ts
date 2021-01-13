@@ -31,7 +31,7 @@ export let executeMove = async (game: Game, originalPos: Position, newPos: Posit
         else game.history.beatenLog.black.push(newPosData.content!)
     }
     if (!skip) game = checkForRochade(game, originalPos, newPos)
-    game = checkForWinner(game, originalPos, newPos)
+    // game = checkForWinner(game, originalPos, newPos)
 
     newPosData.content = checkForTrade(game, orgPosData, newPosData)
     newPosData.player = orgPosData.player
