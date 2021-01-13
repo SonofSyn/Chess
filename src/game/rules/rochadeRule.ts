@@ -6,12 +6,12 @@ import { executeMove } from "../mechanics/execMove"
 export let checkForRochade = (game: Game, orgPos: Position, newPos: Position): Game => {
     if (game.gameBoard[orgPos.x + "" + orgPos.y].content === "König" && (orgPos.y === 1 || orgPos.y === 8)) {
         // now only King Positions
-        rochadePos.forEach(pos => {
+        rochadePos.forEach(async pos => {
             if (pos.x === newPos.x && pos.y === newPos.y) {
                 let towerPos = { x: newPos.x === 3 ? 1 : 8, y: orgPos.y }
                 let newTowerPos = { x: newPos.x === 3 ? newPos.x + 1 : newPos.x - 1, y: orgPos.y }
                 console.log("Rochade")
-                game = executeMove(game, towerPos, newTowerPos, true)
+                game = await executeMove(game, towerPos, newTowerPos, true)
             }
         })
     }

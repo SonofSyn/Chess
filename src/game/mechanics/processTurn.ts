@@ -5,7 +5,7 @@ import { Position } from "../../types/type"
 import { executeMove } from "./execMove"
 import * as io from 'readline-sync';
 
-export let processTurn = (game: Game): Game => {
+export let processTurn = async (game: Game): Promise<Game> => {
     console.log("")
     console.log(displayBoard(game.gameBoard))
     console.log("Der Spieler " + (game.turn % 2 === 0 ? "Weiß" : "Schwarz") + " ist am Zug")
@@ -47,7 +47,7 @@ export let processTurn = (game: Game): Game => {
         return game
     }
     try {
-        game = executeMove(game, { x: xPos, y: yPos }, { x: movexPos, y: moveyPos })
+        game = await executeMove(game, { x: xPos, y: yPos }, { x: movexPos, y: moveyPos })
     } catch (e) {
         console.error(Error(e).message)
         return game

@@ -3,10 +3,10 @@ import { Player, Position } from "../../types/type";
 import { determinPossibleMoves } from "../moves/determinPossibleMoves";
 
 
-export let kingInCheck = (game: Game, color: Player): { field: Chessfield, kingPos: Position } | null => {
+export let kingInCheck = async (game: Game, color: Player) => {
     let kingPos: Position
     let fieldData: Chessfield
-    let back: { field: Chessfield, kingPos: Position } | null = null
+    let back: { field: Chessfield, kingPos: Position }[] = []
     Object.keys(game.gameBoard).forEach(field => {
         fieldData = game.gameBoard[field]
         if (fieldData.content === "König" && fieldData.player !== (color === "schwarz" ? "weiß" : "schwarz")) kingPos = fieldData.pos
@@ -16,10 +16,9 @@ export let kingInCheck = (game: Game, color: Player): { field: Chessfield, kingP
         if (fieldData.content !== null) {
             if (fieldData.player !== game.gameBoard[kingPos.x + "" + kingPos.y].player) {
                 let possibleMoves = determinPossibleMoves(fieldData.pos, game.history.movementLog, game.gameBoard)
-                possibleMoves.pos.forEach(pos => {
+                possibleMoves.pos.forEach(async (pos) => {
                     if (pos.x === kingPos.x && pos.y === kingPos.y) {
-                        console.log("Schach")
-                        back = { field: fieldData, kingPos }
+                        back.push({ field: game.gameBoard[field], kingPos})
                     }
                 })
             }
