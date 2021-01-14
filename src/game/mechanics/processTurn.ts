@@ -7,7 +7,7 @@ import * as io from 'readline-sync';
 
 export let processTurn = async (game: Game): Promise<Game> => {
     console.log("")
-    console.log(displayBoard(game.gameBoard))
+    console.log(await displayBoard(game.gameBoard))
     console.log("Der Spieler " + (game.turn % 2 === 0 ? "Weiß" : "Schwarz") + " ist am Zug")
     let answer = io.question("Welche Figur wollen sie Bewegen? (Bsp.A1)   ")
 
@@ -29,7 +29,7 @@ export let processTurn = async (game: Game): Promise<Game> => {
             console.log("Falsche Farbe wurde ausgewählt")
             return game
         }
-        info = displayPossibleMoves(game.gameBoard, game.history.movementLog, { x: xPos, y: yPos })
+        info = await displayPossibleMoves(game.gameBoard, game.history.movementLog, { x: xPos, y: yPos })
         console.log(info.display)
         if (info.moves.length === 0) {
             console.log("Diese  Figur hat keine möglichen Zuegen")

@@ -19,8 +19,8 @@ test("Position not on board", t => {
     t.is(isOnBoard({ x: 0, y: 0 }), false)
 })
 
-test("Position is blocked by black", t => {
-    let board = initBoard()
+test("Position is blocked by black", async t => {
+    let board = await initBoard()
     t.is(isBlockedBy({ x: 1, y: 7 }, board), "schwarz")
 })
 

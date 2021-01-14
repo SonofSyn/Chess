@@ -9,7 +9,7 @@ import { determinPossibleMoves } from "../moves/determinPossibleMoves"
  * @param {Chessboard} chessBoard
  * @return {*}  {string[][]}
  */
-export let displayBoard = (chessBoard: BoardHash): string[][] => {
+export let displayBoard = async(chessBoard: BoardHash): Promise<string[][]> => {
     let display: string[][] = []
     let temp: string[] = []
     let index: number = 1
@@ -31,9 +31,9 @@ export let displayBoard = (chessBoard: BoardHash): string[][] => {
     return display
 }
 
-export let displayPossibleMoves = (chessBoard: BoardHash, log: Movement[], pos: Position): { display: string[][], moves: Position[] } => {
-    let moves: Position[] = determinPossibleMoves(pos, log, chessBoard).pos
-    let display = displayBoard(chessBoard)
+export let displayPossibleMoves = async (chessBoard: BoardHash, log: Movement[], pos: Position): Promise<{ display: string[][]; moves: Position[]} > => {
+    let moves: Position[] = (await determinPossibleMoves(pos, log, chessBoard)).pos
+    let display = await displayBoard(chessBoard)
     moves.forEach(move => {
         display[8 - move.y][move.x] = "XXXX"
     })

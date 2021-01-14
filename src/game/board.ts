@@ -6,7 +6,7 @@ import { BoardHash } from "../types/interfaces";
  *
  * @return {*}  {Chessboard}
  */
-export let initBoard = (): BoardHash => {
+export let initBoard = async(): Promise<BoardHash> => {
     let hash: BoardHash = {}
     axis.forEach((x, xIx) => {
         axis.forEach((y, yIx) => {

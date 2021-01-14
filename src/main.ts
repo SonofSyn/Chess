@@ -4,8 +4,9 @@ import { executeMove } from "./game/mechanics/execMove";
 import { displayPossibleMoves } from "./game/tools/display";
 import { Game } from "./types/interfaces";
 
-startGame()
-
+(async () => {
+    await startGame()
+})();
 // let gameId = "" + Date.now()
 // let game: Game = { gameId, turn: 0, winner: "", gameBoard: initBoard(), history: { movementLog: [], beatenLog: { white: [], black: [] } } }
 // game = executeMove(game,{x:4,y:1},{x:4,y:8})

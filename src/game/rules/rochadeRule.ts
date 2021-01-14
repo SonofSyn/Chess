@@ -40,7 +40,6 @@ export let rochade = (board: BoardHash, log: Movement[], originalPos: Position) 
                                 if (board[i + "" + originalPos.y].content !== null) notEmptyFlag = true
                             }
                             if (!notEmptyFlag) {
-                                // pos incorrect
                                 back.push({ x: tower.x < originalPos.x ? tower.x + 2 : tower.x - 1, y: tower.y })
                             }
                         }

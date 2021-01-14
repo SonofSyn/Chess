@@ -31,7 +31,7 @@ export let determinPossibleMove = (pos: Position, move: Position, board: BoardHa
  * @param {BoardHash} board
  * @return {*}  {Position[]}
  */
-export let determinPossibleMoves = (pos: Position, log: Movement[], board: BoardHash): { pieceType: string, pos: Position[] } => {
+export let determinPossibleMoves = async (pos: Position, log: Movement[], board: BoardHash): Promise<{ pieceType: string, pos: Position[] }> => {
     let type = board[pos.x + "" + pos.y].content
     if (type !== null) {
         let moves = MoveSet[type](pos, board)
