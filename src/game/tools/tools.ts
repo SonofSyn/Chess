@@ -1,4 +1,4 @@
-import { BoardHash, Movement, PossibleMove } from "../../types/interfaces";
+import { BoardHash} from "../../types/interfaces";
 import { Position, Player } from "../../types/type";
 
 
@@ -8,7 +8,7 @@ import { Position, Player } from "../../types/type";
  * @param {Position} pos
  * @return {*}  {boolean}
  */
-export let isOnBoard = async (pos: Position) => {
+export let isOnBoard = async (pos: Position): Promise<boolean> => {
     if (pos.y < 1 || pos.y > 8 || pos.x < 1 || pos.x > 8) return false
     return true
 }
@@ -22,12 +22,13 @@ export let isOnBoard = async (pos: Position) => {
  */
 export let isBlockedBy = async (pos: Position, board: BoardHash): Promise<Player> => board[await buildKey(pos)].player
 
-export let checkMove = async (posMove: Position[], move: Position) => {
+export let checkMove = async (posMove: Position[], move: Position): Promise<boolean> => {
     let back = false
     posMove.forEach(pos => {
+        //  checks if move in contained in array
         if (pos.x === move.x && pos.y === move.y) back = true
     })
     return back
 }
 
-export let buildKey = async (pos: Position) => pos.x + "" + pos.y
+export let buildKey = async (pos: Position): Promise<string> => pos.x + "" + pos.y

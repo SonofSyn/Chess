@@ -1,8 +1,14 @@
 import { BoardHash } from "../../../types/interfaces"
 import { Position } from "../../../types/type"
 import { checkMoveDirection } from "../checkMoveDirection"
-
-export let bishop = async (pos: Position, board: BoardHash)=>{
+/**
+ * All Positions a bishop game piece can make on a given position and gameboard
+ *
+ * @param {Position} pos
+ * @param {BoardHash} board
+ * @return {*}  {Promise<Position[]>}
+ */
+export let bishop = async (pos: Position, board: BoardHash):Promise<Position[]>=>{
     let back: Position[] = []
 
     back = back.concat(

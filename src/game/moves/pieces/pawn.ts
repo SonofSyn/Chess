@@ -1,10 +1,16 @@
 import { isBlockedBy, isOnBoard } from "../../tools/tools"
-import { BoardHash, MoveTemplate, PossibleMove } from "../../../types/interfaces"
+import { BoardHash, PossibleMove } from "../../../types/interfaces"
 import { Position } from "../../../types/type"
 import { determinPossibleMove } from "../determinPossibleMoves"
 
-
-export let pawn = async (pos: Position, board: BoardHash) => {
+/**
+ * All Positions a pawn game piece can make on a given position and gameboard
+ *
+ * @param {Position} pos
+ * @param {BoardHash} board
+ * @return {*}  {Promise<Position[]>}
+ */
+export let pawn = async (pos: Position, board: BoardHash):Promise<Position[]> => {
     let back: Position[] = []
     let moveDirUp = board[pos.x + "" + pos.y].player === "weiß" ? true : false
     for (let x = -1; x <= 1; x++) {

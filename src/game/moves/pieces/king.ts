@@ -1,8 +1,14 @@
 import { determinPossibleMove } from "../determinPossibleMoves"
 import { BoardHash, PossibleMove } from "../../../types/interfaces"
 import { Position } from "../../../types/type"
-
-export let king = async (pos: Position, board: BoardHash) => {
+/**
+ * All Positions a king game piece can make on a given position and gameboard
+ *
+ * @param {Position} pos
+ * @param {BoardHash} board
+ * @return {*}  {Promise<Position[]>}
+ */
+export let king = async (pos: Position, board: BoardHash):Promise<Position[]> => {
     let back: Position[] = []
     for (let i = -1; i <= 1; i++) {
         //left/right
