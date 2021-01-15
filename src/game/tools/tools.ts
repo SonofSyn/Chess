@@ -8,7 +8,7 @@ import { Position, Player } from "../../types/type";
  * @param {Position} pos
  * @return {*}  {boolean}
  */
-export let isOnBoard = (pos: Position): boolean => {
+export let isOnBoard = async (pos: Position) => {
     if (pos.y < 1 || pos.y > 8 || pos.x < 1 || pos.x > 8) return false
     return true
 }
@@ -20,12 +20,14 @@ export let isOnBoard = (pos: Position): boolean => {
  * @param {BoardHash} board
  * @return {*}  {Color}
  */
-export let isBlockedBy = (pos: Position, board: BoardHash): Player => board[pos.x + "" + pos.y].player
+export let isBlockedBy = async (pos: Position, board: BoardHash): Promise<Player> => board[await buildKey(pos)].player
 
-export let checkMove = (posMove: Position[], move: Position): boolean => {
+export let checkMove = async (posMove: Position[], move: Position) => {
     let back = false
     posMove.forEach(pos => {
         if (pos.x === move.x && pos.y === move.y) back = true
     })
     return back
 }
+
+export let buildKey = async (pos: Position) => pos.x + "" + pos.y

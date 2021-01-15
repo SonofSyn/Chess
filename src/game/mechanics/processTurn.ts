@@ -25,11 +25,11 @@ export let processTurn = async (game: Game): Promise<Game> => {
 
     try {
         let turnPlayer = (game.turn % 2 === 0 ? "weiß" : "schwarz")
-        if (turnPlayer !== isBlockedBy({ x: xPos, y: yPos }, game.gameBoard)) {
+        if (turnPlayer !== await isBlockedBy({ x: xPos, y: yPos }, game.gameBoard)) {
             console.log("Falsche Farbe wurde ausgewählt")
             return game
         }
-        info = await displayPossibleMoves(game.gameBoard, game.history.movementLog, { x: xPos, y: yPos })
+        info = await displayPossibleMoves(game, { x: xPos, y: yPos })
         console.log(info.display)
         if (info.moves.length === 0) {
             console.log("Diese  Figur hat keine möglichen Zuegen")

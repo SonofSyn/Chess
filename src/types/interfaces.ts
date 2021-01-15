@@ -15,5 +15,5 @@ export interface BeatenPieces { white: ChessPiece[], black: ChessPiece[] }
 export interface BoardHash { [pos: string]: Chessfield }
 export interface Chessfield { pos: Position, content: null | ChessPiece, player: Player }
 
-export interface MoveTemplate { [chessPiece: string]: (pos: Position, board: BoardHash) => Position[] }
+export interface MoveTemplate { [chessPiece: string]: (pos: Position, board: BoardHash) => Promise<Position[]> }
 export interface PossibleMove { pos: Position | null, lastPossiblePos: boolean }

@@ -12,10 +12,10 @@ import { isOnBoard, isBlockedBy } from "../tools/tools"
  * @param {BoardHash} board
  * @return {*}  {PossibleMove}
  */
-export let determinPossibleMove = (pos: Position, move: Position, board: BoardHash): PossibleMove => {
+export let determinPossibleMove = async (pos: Position, move: Position, board: BoardHash): Promise<PossibleMove> => {
     let back: Position = { x: pos.x + move.x, y: pos.y + move.y }
-    if (isOnBoard(back)) {
-        let blockedBy = isBlockedBy(back, board)
+    if (await isOnBoard(back)) {
+        let blockedBy = await isBlockedBy(back, board)
         if (blockedBy === "") return { pos: back, lastPossiblePos: false }
         if (blockedBy !== board[pos.x + "" + pos.y].player) return { pos: back, lastPossiblePos: true }
         else return { pos: null, lastPossiblePos: true }
@@ -34,7 +34,7 @@ export let determinPossibleMove = (pos: Position, move: Position, board: BoardHa
 export let determinPossibleMoves = async (pos: Position, log: Movement[], board: BoardHash): Promise<{ pieceType: string, pos: Position[] }> => {
     let type = board[pos.x + "" + pos.y].content
     if (type !== null) {
-        let moves = MoveSet[type](pos, board)
+        let moves = await MoveSet[type](pos, board)
         let extraMoves = rochade(board, log, pos)
         moves = moves.concat(extraMoves)
         return { pieceType: type, pos: moves }
