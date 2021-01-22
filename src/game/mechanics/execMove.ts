@@ -5,6 +5,7 @@ import { checkForRochade } from "../rules/rochadeRule"
 import { checkForTrade } from "../rules/tradeRule"
 import { kingInCheck } from "../rules/kingInCheck"
 import { checkMate } from "../rules/checkMate"
+import { checkPatt } from "../rules/pattRule"
 
 
 
@@ -52,8 +53,16 @@ export let executeMove = async (game: Game, originalPos: Position, newPos: Posit
 
     // log move
     game.history.movementLog.push({ orgPos: originalPos, newPos: newPos, chessPiece: orgPosData.content!, player: orgPosData.player! })
-    // checks if the enemy is now in check
 
+    // error
+    // checks if the game is patt
+    // if (await checkPatt(game, newPosData.player)) {
+    //     console.log("Patt")
+    //     game.winner = "Tie"
+    //     return game
+    // }
+    
+    // checks if the enemy is now in check
     check = await kingInCheck(game, newPosData.player === "weiß" ? "schwarz" : "weiß")
     if (check.length > 0) {
         console.log("Schach")
@@ -74,7 +83,7 @@ export let executeMove = async (game: Game, originalPos: Position, newPos: Posit
  * @param {Chessfield} newPosData
  * @return {*} 
  */
-export let doMove = async (game: Game, orgPosData: Chessfield, newPosData: Chessfield):Promise<Chessfield> => {
+export let doMove = async (game: Game, orgPosData: Chessfield, newPosData: Chessfield): Promise<Chessfield> => {
     let backUp = Object.assign({}, newPosData)
     newPosData.content = await checkForTrade(game, orgPosData, newPosData)
     newPosData.player = orgPosData.player
@@ -90,7 +99,7 @@ export let doMove = async (game: Game, orgPosData: Chessfield, newPosData: Chess
  * @param {Chessfield} newPosData
  * @param {Chessfield} backUp
  */
-export let undoMove = async (orgPosData: Chessfield, newPosData: Chessfield, backUp: Chessfield):Promise<void> => {
+export let undoMove = async (orgPosData: Chessfield, newPosData: Chessfield, backUp: Chessfield): Promise<void> => {
     orgPosData.content = newPosData.content
     orgPosData.player = newPosData.player
     newPosData.content = backUp.content

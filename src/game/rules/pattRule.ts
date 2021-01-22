@@ -19,13 +19,14 @@ export let checkPatt = async (game: Game, color: Player): Promise<boolean> => {
         fieldData = game.gameBoard[field]
         // saves the position of the own king
         if (fieldData.player === color) {
-            let moves = determinPossibleMoves(fieldData.pos, game.history.movementLog, game.gameBoard)
+            let moves = await determinPossibleMoves(fieldData.pos, game.history.movementLog, game.gameBoard)
+            console.log(moves)
             // checks if player has no possible moves
-            if ((await moves).pos.length !== 0) noMovesLeft = false
+            if ((moves).pos.length !== 0) noMovesLeft = false
         } else {
-            let moves = determinPossibleMoves(fieldData.pos, game.history.movementLog, game.gameBoard)
+            let moves = await determinPossibleMoves(fieldData.pos, game.history.movementLog, game.gameBoard)
             // checks if other player has no possible moves
-            if ((await moves).pos.length !== 0) noMovesLeft2 = false
+            if ((moves).pos.length !== 0) noMovesLeft2 = false
         }
     })
     // checks if any player has no more moves left and returns if the game is patt

@@ -1,0 +1,21 @@
+.square {
+    min-width: 9vh;
+    min-height: 9vh;
+    max-width: 9vh;
+    max-height: 9vh;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.black{
+    background-color: black;
+}
+
+.white{
+    background-color: white;
+}
+
+.axis {
+    border:1px solid white;
+    display: inline-block;
+}
