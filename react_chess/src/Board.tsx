@@ -1,4 +1,5 @@
 import React from "react";
+import { startSet } from "./const";
 import './css/Board.css';
 import './css/Square.css';
 import { Square } from "./Square";
@@ -42,7 +43,10 @@ export class Board extends React.Component<Props, State> {
                 else {
                     if (y % 2 === 1) color = x % 2 === 1 ? "black" : "white"
                     else color = x % 2 === 1 ? "white" : "black"
-                    rows.push(this.renderSquare(" ", x + "" + y, color))
+                    if (y === 1 || y === 8) rows.push(this.renderSquare(startSet[0][x - 1], x + "" + y, color))
+                    else if (y === 2 || y === 7) rows.push(this.renderSquare(startSet[1][x - 1], x + "" + y, color))
+                    else rows.push(this.renderSquare(" ", x + "" + y, color))
+
                 }
 
             }

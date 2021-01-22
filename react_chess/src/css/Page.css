@@ -22,7 +22,6 @@
 
 .Gameboard {
     display: inline-block;
-    margin: 0 5% 5% 1.5%;
     background-color: white;
     min-width: 90%;
     min-height: 90%;
