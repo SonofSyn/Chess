@@ -1,9 +1,9 @@
 {
   "name": "chess",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/main",
   "scripts": {
-    "start": "node ./dist/main",
+    "start": "node ./dist/game/main",
     "test": "ava",
     "watch": "tsc --watch"
   },
