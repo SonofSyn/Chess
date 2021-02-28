@@ -26,13 +26,13 @@ export let executeMove = async (game: Game, originalPos: Position, newPos: Posit
     // Filters if moves are made correctly
     if (!isOnBoard(newPos)) throw new Error("Die neue Position befindet sich nicht auf dem Board")
     if (orgPosData.content === null) throw new Error("Es befindet sich keine Spielfigur auf der Position")
-    if (game.turn % 2 === 0 && orgPosData.player !== "weiß" && !skip) throw new Error("Spieler Weiß ist am Zug")
+    if (game.turn % 2 === 0 && orgPosData.player !== "weiss" && !skip) throw new Error("Spieler Weiß ist am Zug")
     else if (game.turn % 2 === 1 && orgPosData.player !== "schwarz" && !skip) throw new Error("Spieler Schwarz ist am Zug")
 
     // Checks whether the move beat a game piece
     if (newPosData.content !== null) {
         //logs beaten chesspiece
-        if (newPosData.player === "weiß") game.history.beatenLog.white.push(newPosData.content!)
+        if (newPosData.player === "weiss") game.history.beatenLog.white.push(newPosData.content!)
         else game.history.beatenLog.black.push(newPosData.content!)
     }
     // Checks for the rochade rule
@@ -63,13 +63,13 @@ export let executeMove = async (game: Game, originalPos: Position, newPos: Posit
     // }
     
     // checks if the enemy is now in check
-    check = await kingInCheck(game, newPosData.player === "weiß" ? "schwarz" : "weiß")
+    check = await kingInCheck(game, newPosData.player === "weiss" ? "schwarz" : "weiss")
     if (check.length > 0) {
         console.log("Schach")
         // checks if the game is finished
         if (await checkMate(game, newPosData.player)) {
             console.log("Schachmatt")
-            game.winner = ((game.turn - 1) % 2 === 0 ? "weiß" : "schwarz")
+            game.winner = ((game.turn - 1) % 2 === 0 ? "weiss" : "schwarz")
         }
     }
     return game

@@ -12,7 +12,7 @@ import { determinPossibleMove } from "../determinPossibleMoves"
  */
 export let pawn = async (pos: Position, board: BoardHash):Promise<Position[]> => {
     let back: Position[] = []
-    let moveDirUp = board[pos.x + "" + pos.y].player === "weiß" ? true : false
+    let moveDirUp = board[pos.x + "" + pos.y].player === "weiss" ? true : false
     for (let x = -1; x <= 1; x++) {
         //up 2 steps
         if (x == 0 && pos.y === 2 && moveDirUp) {

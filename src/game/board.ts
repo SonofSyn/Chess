@@ -18,7 +18,7 @@ export let initBoard = async (): Promise<BoardHash> => {
                 hash[x + "" + y] = {
                     pos: { x, y },
                     content: startSet[0][xIx],
-                    player: yIx === 0 ? "weiß" : "schwarz"
+                    player: yIx === 0 ? "weiss" : "schwarz"
                 }
             }
             // fill pawn row
@@ -26,7 +26,7 @@ export let initBoard = async (): Promise<BoardHash> => {
                 hash[x + "" + y] = {
                     pos: { x, y },
                     content: startSet[1][xIx],
-                    player: yIx === 1 ? "weiß" : "schwarz"
+                    player: yIx === 1 ? "weiss" : "schwarz"
                 }
             }
             // else fill empty
