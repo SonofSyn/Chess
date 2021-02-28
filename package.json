@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./dist/main",
   "scripts": {
-    "start": "node ./dist/game/main",
+    "start": "node ./dist/main",
     "test": "ava",
     "watch": "tsc --watch"
   },
