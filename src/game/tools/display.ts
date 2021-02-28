@@ -67,6 +67,6 @@ export let displayPossibleMoves = async (game: Game, pos: Position): Promise<{ d
         if (!flag) display[8 - move.y][move.x] = "XXXX"
 
     })
-
+    console.log(moves)
     return { display, moves }
 }

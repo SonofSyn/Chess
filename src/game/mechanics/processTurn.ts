@@ -33,7 +33,7 @@ export let processTurn = async (game: Game): Promise<Game> => {
 
     try {
         // checks if a game piece of the current turn was selected
-        let turnPlayer = (game.turn % 2 === 0 ? "weiß" : "schwarz")
+        let turnPlayer = (game.turn % 2 === 0 ? "weiss" : "schwarz")
         if (turnPlayer !== await isBlockedBy({ x: xPos, y: yPos }, game.gameBoard)) {
             console.log("Falsche Farbe wurde ausgewählt")
             return game

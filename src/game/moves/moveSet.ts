@@ -10,7 +10,7 @@ export const MoveSet: MoveTemplate = {
     "Bauer": pawn,
     "Turm": tower,
     "Springer": knight,
-    "Läufer": bishop,
-    "Königin": queen,
-    "König": king,
+    "Laeufer": bishop,
+    "Koenigin": queen,
+    "Koenig": king,
 }
