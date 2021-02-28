@@ -18,7 +18,7 @@ export let kingInCheck = async (game: Game, color: Player): Promise<{ field: Che
     await forEachAsync(Object.keys(game.gameBoard), async field => {
         fieldData = game.gameBoard[field]
         // saves the position of the own king
-        if (fieldData.content === "König" && fieldData.player === color) kingPos = fieldData.pos
+        if (fieldData.content === "Koenig" && fieldData.player === color) kingPos = fieldData.pos
     })
     // goes through all game pieces
     await forEachAsync(Object.keys(game.gameBoard), async field => {

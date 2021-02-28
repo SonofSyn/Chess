@@ -25,7 +25,7 @@ export let displayBoard = async (chessBoard: BoardHash): Promise<string[][]> => 
         axis.forEach(x => {
             // saves game piece to be displayed
             let figure = chessBoard[x + "" + y].content === null ? "  " : chessBoard[x + "" + y].content!.slice(0, 1)
-            if (chessBoard[x + "" + y].content === "Königin") figure = "Q"
+            if (chessBoard[x + "" + y].content === "Koenigin") figure = "Q"
             let color = (chessBoard[x + "" + y].content !== null ? "[" + chessBoard[x + "" + y].player[0] + "]" : "  ")
             temp.push(figure + color)
         })

@@ -23,7 +23,7 @@ export let checkForTrade = async (game: Game, orgPosData: Chessfield, newPosData
  * @param {Position} newPos
  * @return {*}  {(Promise<"Bauer" | "Turm" | "Springer" | "Läufer" | "Königin" | "König" | null>)}
  */
-export let tradePawn = async (game: Game, originalPos: Position, newPos: Position): Promise<"Bauer" | "Turm" | "Springer" | "Läufer" | "Königin" | "König" | null> => {
+export let tradePawn = async (game: Game, originalPos: Position, newPos: Position): Promise<"Bauer" | "Turm" | "Springer" | "Laeufer" | "Koenigin" | "Koenig" | null> => {
     // checks the chess piece moved is a pawn
     if (game.gameBoard[originalPos.x + "" + originalPos.y].content === "Bauer") {
         let log: ChessPiece[] = []

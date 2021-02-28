@@ -14,7 +14,7 @@ import { buildKey } from "../tools/tools"
  */
 export let checkForRochade = async (game: Game, orgPos: Position, newPos: Position): Promise<Game> => {
     // checks if the moved piece is a king
-    if (game.gameBoard[orgPos.x + "" + orgPos.y].content === "König" && (orgPos.y === 1 || orgPos.y === 8)) {
+    if (game.gameBoard[orgPos.x + "" + orgPos.y].content === "Koenig" && (orgPos.y === 1 || orgPos.y === 8)) {
         // goes through all rochade Positions
         rochadePos.forEach(async pos => {
             // checks if the position to be moved to is a rochade position
@@ -43,7 +43,7 @@ export let rochade = async (board: BoardHash, log: Movement[], pos: Position): P
     let kingPositions: Position[] = [{ x: 5, y: 1 }, { x: 5, y: 8 }]
     let towerPositions: Position[] = [{ x: 1, y: 1 }, { x: 8, y: 1 }, { x: 1, y: 8 }, { x: 8, y: 8 }]
     // checks if the game piece to be move is a king
-    if (board[await buildKey(pos)].content === "König") {
+    if (board[await buildKey(pos)].content === "Koenig") {
         // goes through all king start position
         kingPositions.forEach(async pos => {
             // checks if the king is on its start position

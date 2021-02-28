@@ -8,7 +8,7 @@ test("create Board", async t => {
 
 test("check for king", async t => {
     let board = await initBoard()
-    t.is(board["51"].content, "König")
+    t.is(board["51"].content, "Koenig")
 })
 
 test("check if empty", async t => {
